@@ -11,6 +11,10 @@ class User < ApplicationRecord
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
 
+  validates :username, length: { maximum: 40 }, format: { with: /\A\w+\z/ }
+
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+
   validates :password, presence: true, on: :create
 
   validates_confirmation_of :password
@@ -25,7 +29,8 @@ class User < ApplicationRecord
       self.password_hash = User.hash_to_string(
         OpenSSL::PKCS5.pbkdf2_hmac(
           password, password_salt, ITERATIONS,
-          DIGEST.length, DIGEST)
+          DIGEST.length, DIGEST
+        )
       )
     end
   end
@@ -45,7 +50,7 @@ class User < ApplicationRecord
         password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST
       )
     )
-    
+
     return user if user.password_hash == hashed_password
 
     nil
