@@ -1,39 +1,56 @@
 class UsersController < ApplicationController
+
+  before_action :load_user, except: [:index, :create, :new]
+  before_action :authorize_user, except: [:index, :new, :create, :show]
+
   def index
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Evgen',
-        username: 'Evgenno',
-        avatar_url: 'https://st4.depositphotos.com/20523700/25919/i/1600/depositphotos_259190824-stock-photo-illustration-avatar-icon.jpg'
-      ),
-      User.new(
-        id: 2,
-        name: 'Dmitriy',
-        username: 'Dmitriyno',
-        avatar_url: 'https://media.istockphoto.com/vectors/customer-service-icon-vector-male-data-support-person-profile-avatar-vector-id1162692122'
-      )
-    ]
+    @users = User.all
   end
 
   def new
+    redirect_to root_path, alert: 'Вы уже залогинены!' if current_user.present?
+    @user = User.new
   end
 
   def edit
   end
 
+  def create
+    redirect_to root_path, alert: 'Вы уже залогинены!' if current_user.present?
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_path, notice: 'Пользователь успешно создан!'
+    else
+      render 'new'
+    end
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные обновлены!'
+    else
+      render 'edit'
+    end
+  end
+
   def show
-    @user = User.new(
-      name: 'Evgen',
-      username: 'Evgenno',
-      avatar_url: 'https://sin5.org/images/faces/1.jpg'
-    )
+    @questions = @user.questions.order(created_at: :desc)
 
-    @questions = [
-      Question.new(text: 'Как дела?', created_at: Date.parse('12.02.2022')),
-      Question.new(text: 'В чём смысл жизни?', created_at: Date.parse('12.02.2022'))
-    ]
+    @new_question = @user.questions.build
+  end
 
-    @new_question = Question.new
+  private
+
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :username, :avatar_url)
   end
 end
