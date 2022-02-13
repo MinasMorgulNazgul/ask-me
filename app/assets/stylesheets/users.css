@@ -8,6 +8,12 @@
   color: white;
 }
 
+.user-statistics {
+  padding: 20px 0;
+  background: gray;
+  color: white;
+}
+
 .user-header a {
   color: white;
 }
