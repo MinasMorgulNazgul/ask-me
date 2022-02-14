@@ -39,8 +39,8 @@ class UsersController < ApplicationController
 
     @new_question = @user.questions.build
 
-    @questions_with_answers = @user.questions.count(&:answer)
-    @questions_without_answers = @questions.size - @questions_with_answers
+    @questions_with_answers = @user.questions.where.not(answer: [nil, ""]).count
+    @questions_without_answers = @questions.count - @questions_with_answers
   end
 
   private

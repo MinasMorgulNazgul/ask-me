@@ -7,7 +7,7 @@ module ApplicationHelper
     end
   end
 
-  def count_questions(number, word1, word2, word3)
+  def declension_of_words(number, word1, word2, word3)
     if (number % 100).between?(11, 14)
       "#{number} #{word3}"
     elsif number % 10 == 1
