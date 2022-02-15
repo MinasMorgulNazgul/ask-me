@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
     if @user.save
       redirect_to root_path, notice: 'Пользователь успешно создан!'
+      session[:user_id] = @user.id
     else
       render 'new'
     end
