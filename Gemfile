@@ -8,6 +8,7 @@ gem 'puma', '~> 5.0'
 gem 'webpacker', '~> 5.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'uglifier'
+gem 'rails_12factor'
 
 group :production do
   gem 'pg'
