@@ -7,7 +7,11 @@
     <%# Текст вопроса %>
     <div class="question-text text-lead">
       <%= question.text %>
-      <p class="text-medium">вопрос от <%= question.user.name %></p>
+      <% if question.author.present? %>
+        <p class="text-medium">вопрос от <%= link_to "#{question.author.username}", user_path(question.author_id) %></p>
+      <% else %>
+        <p class="text-medium">вопрос от анонима</p>
+      <% end %>
     </div>
 
     <%# Текст ответа, если он есть %>
