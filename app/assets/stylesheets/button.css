@@ -14,6 +14,10 @@
   color: #fff;
 }
 
+.button-red {
+  background: red;
+}
+
 .button-green {
   background: #005a55;
   color: #fff;
