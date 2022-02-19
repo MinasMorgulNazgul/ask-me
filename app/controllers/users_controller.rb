@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :load_user, except: [:index, :create, :new]
   before_action :authorize_user, except: [:index, :new, :create, :show]
 
@@ -29,6 +28,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
+    reset_session
     redirect_to root_path, notice: 'Ваш аккаунт удалён! :( '
   end
 
