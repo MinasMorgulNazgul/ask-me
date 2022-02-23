@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    attributes:
+      user:
+        name: Ваше имя
+        username: Ваш юзернейм
+        avatar_url: URL аватарки
+        color: Выберите цвет фона
+        password: Введите пароль
+        password_confirmation: Введите пароль ещё раз
