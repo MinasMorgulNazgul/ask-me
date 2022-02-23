@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   validates :username, length: { maximum: 40 }, format: { with: /\A\w+\z/ }
 
-  validates :color, length: { maximum: 7 }
+  validates :color, format: { with: /\A#\h{3}{1,2}\z/ }
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
